@@ -38,9 +38,7 @@ Output files are named `<original>_clean.pptx` by default.
 
 ## Before / After
 
-| Before | After |
-|--------|-------|
-| ![before](assets/before.png) | ![after](assets/after.png) |
+![comparison](assets/comparison.png)
 
 ## Requirements
 
