@@ -8,10 +8,12 @@ NotebookLM adds a small "NotebookLM" logo + text watermark to the bottom-right c
 
 NotebookLM exports each slide as a single full-page PNG image embedded in a PPTX file. The watermark is baked into the image itself. This tool:
 
-1. Opens the PPTX and extracts each slide image
-2. Samples the background pixels directly above the watermark area
-3. Pastes the sampled strip over the watermark to seamlessly blend with the background
-4. Saves a clean copy of the PPTX
+1. Detects full-page slide images (skips logos, icons, and inline images)
+2. Checks if a watermark actually exists before processing
+3. Samples background pixels above the watermark area
+4. Pastes with feathered edges for seamless blending
+5. Deduplicates shared images across slides
+6. Saves a clean copy of the PPTX
 
 ## Install
 
@@ -32,6 +34,9 @@ python3 notebooklm_dewatermark.py presentation.pptx -o clean.pptx
 
 # Batch processing
 python3 notebooklm_dewatermark.py *.pptx
+
+# Custom watermark dimensions (if NotebookLM changes the watermark size)
+python3 notebooklm_dewatermark.py input.pptx --wm-width 200 --wm-height 40
 ```
 
 Output files are named `<original>_clean.pptx` by default.
@@ -39,6 +44,15 @@ Output files are named `<original>_clean.pptx` by default.
 ## Before / After
 
 ![comparison](assets/comparison.png)
+
+## Features
+
+- Only processes full-page background images (won't touch logos or inline photos)
+- Auto-detects whether a watermark is present (skips slides without one)
+- Feathered edge blending for seamless removal on any background
+- Handles shared images across slides (no double-processing)
+- Customizable watermark dimensions via CLI flags
+- Batch processing support
 
 ## Requirements
 
